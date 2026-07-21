@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #059669;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .warning { color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <h1>🔍 API Connection Test</h1>
+    <p>Test if the API server is reachable from the browser.</p>
+    
+    <button onclick="testHealth()">✅ Test Health Check</button>
+    <button onclick="testCORS()">🌐 Test CORS</button>
+    
+    <div id="result"></div>
+
+    <script>
+        async function testHealth() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p class="warning">⏳ Testing API health...</p>';
+
+            try {
+                const response = await fetch('http://localhost:3003/api/health');
+                const data = await response.json();
+
+                if (data.status === 'ok') {
+                    resultDiv.innerHTML = `
+<p class="success">✅ API Server is Running!</p>
+<p>Status: ${data.status}</p>
+<p>Token Status: ${data.tokenStatus}</p>
+<p>Has Token: ${data.hasToken ? 'Yes ✅' : 'No ⚠️ (Add token to .env)'}</p>
+<p class="success">Connection: Working perfectly!</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ Unexpected response: ${JSON.stringify(data)}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+<p class="error">❌ Connection Failed!</p>
+<p>Error: ${error.message}</p>
+<p>Make sure:</p>
+<ul>
+    <li>API server is running (npm run dev:all)</li>
+    <li>Server is on port 3003</li>
+    <li>No firewall blocking localhost</li>
+</ul>
+                `;
+            }
+        }
+
+        async function testCORS() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p class="warning">⏳ Testing CORS...</p>';
+
+            try {
+                const response = await fetch('http://localhost:3003/api/health', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+<p class="success">✅ CORS is Working!</p>
+<p>The API server accepts requests from the browser.</p>
+<p>Status Code: ${response.status}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ CORS issue: Status ${response.status}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+<p class="error">❌ CORS Test Failed!</p>
+<p>Error: ${error.message}</p>
+                `;
+            }
+        }
+
+        // Auto-test on load
+        window.onload = () => {
+            setTimeout(testHealth, 500);
+        };
+    </script>
+</body>
+</html>

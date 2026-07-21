@@ -4,7 +4,7 @@ import { Layout } from './components/Layout';
 import { MOCK_PRODUCTS, DEFAULT_PRODUCT_IMAGE } from './constants';
 import { Product, CartItem, ViewMode } from './types';
 import { Star, ChevronRight, ShieldCheck, Truck, RotateCcw, Camera, Heart, CheckCircle } from 'lucide-react';
-import { VirtualTryOn } from './components/VirtualTryOn';
+import { LocalVirtualTryOn } from './components/LocalVirtualTryOn';
 
 /**
  * Reusable Product Image component with robust error handling and reactive src updates.
@@ -399,7 +399,7 @@ const App: React.FC = () => {
       {currentView === ViewMode.Cart && renderCart()}
 
       {isTryOnActive && selectedProduct && (
-        <VirtualTryOn 
+        <LocalVirtualTryOn 
           product={selectedProduct} 
           onClose={() => setIsTryOnActive(false)} 
         />
