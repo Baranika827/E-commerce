@@ -1,48 +1,70 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OmniFit - Enterprise E-commerce</title>
+  <title>OmniFit — AI Virtual Fashion & Shopping Platform</title>
+  <meta name="description" content="Experience clothes on your body before buying with OmniFit AI Virtual Try-On, smart size recommendations, and digital wardrobe intelligence.">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0F172A',
+              slate: '#1E293B',
+              indigo: '#4F46E5',
+              violet: '#8B5CF6',
+              emerald: '#10B981'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body { 
       font-family: 'Inter', sans-serif; 
-      background-color: #f3f4f6; 
+      background-color: #090D16; 
+      color: #F8FAFC;
       margin: 0;
       overflow-x: hidden;
     }
-    .amazon-orange { background-color: #febd69; }
-    .amazon-blue { background-color: #131921; }
-    .amazon-light-blue { background-color: #232f3e; }
     
-    /* Custom Scrollbar for sidebars */
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
+    /* Scrollbar hide helper */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #cbd5e1;
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
-    /* Animation for AR scanning */
-    @keyframes scan {
-      0% { transform: translateY(-100%); opacity: 0; }
-      50% { opacity: 0.5; }
-      100% { transform: translateY(100%); opacity: 0; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
-    .scan-line {
-      height: 2px;
-      background: linear-gradient(to right, transparent, #febd69, transparent);
-      animation: scan 3s infinite linear;
+    ::-webkit-scrollbar-track {
+      background: #0F172A;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 4s infinite ease-in-out;
     }
   </style>
 <script type="importmap">

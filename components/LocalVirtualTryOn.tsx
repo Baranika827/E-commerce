@@ -551,7 +551,8 @@ export const LocalVirtualTryOn: React.FC<LocalVirtualTryOnProps> = ({ product, o
                           style={{ left: `${sliderPosition}%` }}
                           onMouseDown={(e) => {
                             const handleMouseMove = (e: MouseEvent) => {
-                              const rect = e.currentTarget?.parentElement?.getBoundingClientRect();
+                              const target = e.currentTarget as HTMLElement | null;
+                              const rect = target?.parentElement?.getBoundingClientRect();
                               if (rect) {
                                 const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
                                 setSliderPosition((x / rect.width) * 100);
